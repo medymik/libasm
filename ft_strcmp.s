@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    ft_strcmp.s                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mymik <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: mymik <mymik@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/23 02:58:18 by mymik             #+#    #+#              #
-#    Updated: 2020/02/23 02:58:19 by mymik            ###   ########.fr        #
+#    Updated: 2020/03/04 14:32:27 by mymik            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,9 @@ section .text
 	global _ft_strcmp
 _ft_strcmp:
 	xor rcx, rcx
-	cmp rsi, 0
-	jz isnull
-	cmp rdi, 0
-	jz isnull
+	xor rax, rax
+	xor rdx, rdx
 	jmp check
-
-isnull:
-	cmp rdi, rsi
-	jz equal
-	jg greater
-	jmp less
 
 compare:
 	mov dl, BYTE [rdi + rcx]
@@ -42,20 +34,8 @@ check:
 	jmp compare
 
 last:
-	mov dl, BYTE [rdi + rcx]
-	sub dl, BYTE[rsi + rcx]
-	cmp dl, 0
-	jz equal
-	jl less
-
-greater:
-	mov rax, 1
-	ret
-
-less:
-	mov rax, -1
-	ret
-
-equal:
-	mov rax, 0
+	mov al, BYTE [rdi + rcx]
+	mov dl, BYTE [rsi + rcx]
+	sub rax, rdx
+	xor rdx, rdx
 	ret
